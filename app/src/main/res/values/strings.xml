@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">EveryWhereApp</string>
+    <string name="button_driver_text">司机</string>
+    <string name="button_customer_text">乘客</string>
+</resources>
