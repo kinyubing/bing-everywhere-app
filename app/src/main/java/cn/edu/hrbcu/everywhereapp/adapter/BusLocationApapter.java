@@ -55,8 +55,17 @@ public class BusLocationApapter extends ArrayAdapter<BusLocation> {
         TextView latitude = view.findViewById(R.id.latitude);
 
         busname.setText(busLocation.getName());
-        longtitude.setText(dblToLocation(busLocation.getLongtitude()));
-        latitude.setText(dblToLocation(busLocation.getLatitude()));
+        if(busLocation.getLongtitude() == null){
+            longtitude.setText("--");
+        }else{
+            longtitude.setText(dblToLocation(busLocation.getLongtitude()));
+        }
+
+        if(busLocation.getLatitude() == null){
+            latitude.setText("--");
+        }else{
+            latitude.setText(dblToLocation(busLocation.getLatitude()));
+        }
 
         return view;
     }
