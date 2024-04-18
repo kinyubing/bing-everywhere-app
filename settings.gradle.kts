@@ -13,5 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
+
 rootProject.name = "everywhereapp"
 include(":app")

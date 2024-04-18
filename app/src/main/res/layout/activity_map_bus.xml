@@ -10,12 +10,12 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="请使用高德地图显示Bus的位置"/>
+        android:text="请使用高德地图显示Bus的位置" />
 
     <TextView
         android:id="@+id/textview_busname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Bus name is : "/>
+        android:text="Bus name is : " />
 
 </LinearLayout>
