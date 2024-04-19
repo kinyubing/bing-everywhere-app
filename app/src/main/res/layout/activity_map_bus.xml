@@ -18,4 +18,9 @@
         android:layout_height="wrap_content"
         android:text="Bus name is : "/>
 
+    <com.amap.api.maps2d.MapView
+        android:id="@+id/mapView002"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </LinearLayout>
