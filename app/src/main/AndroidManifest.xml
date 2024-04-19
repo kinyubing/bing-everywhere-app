@@ -12,7 +12,7 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/applogo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/applogo"
+        android:roundIcon="@mipmap/applogo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EveryWhereApp"
         android:usesCleartextTraffic="true"
