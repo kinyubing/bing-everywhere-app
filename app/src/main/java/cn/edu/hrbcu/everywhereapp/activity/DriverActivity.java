@@ -6,9 +6,12 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -19,6 +22,7 @@ import android.os.Message;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -27,6 +31,7 @@ import com.alibaba.fastjson2.JSON;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 import cn.edu.hrbcu.everywhereapp.R;
 import cn.edu.hrbcu.everywhereapp.adapter.BusAdapter;
@@ -52,35 +57,20 @@ public class DriverActivity extends AppCompatActivity {
     LocationManager locationManager = null;
     LocationProvider provider = null;
     private Spinner spinner;
+    private Double longitude, latitude;
+    private String note;
+    private List<BusLocation> buses;
 
-    Handler handler = new Handler(){
+
+    Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
             //super.handleMessage(msg);
-            switch (msg.what){
+            switch (msg.what) {
                 case 0:
-                    List<BusLocation> buses = (List<BusLocation>)msg.obj;
+                    List<BusLocation> buses = (List<BusLocation>) msg.obj;
                     BusAdapter spinnerAdapter = new BusAdapter(DriverActivity.this, buses);
                     spinner.setAdapter(spinnerAdapter);
-                    break;
-                case 1:
-                    Request request = (Request)msg.obj;
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            okHttpClient.newCall(request).enqueue(new okhttp3.Callback() {
-                                @Override
-                                public void onFailure(@NonNull Call call, @NonNull IOException e) {
-
-                                }
-
-                                @Override
-                                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                                    Toast.makeText(DriverActivity.this, "发送成功", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
-                    }).start();
                     break;
             }
 
@@ -92,10 +82,28 @@ public class DriverActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver);
+        //获取车辆spinner列表框
         spinner = (Spinner) findViewById(R.id.spinner_buses);
-        button_login = findViewById(R.id.button_login);
+        //为spinner选择子项添加监听器
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //获取司机选择的路线位置
+                BusLocation busLocation = buses.get(position);
+                //将选择的路线名称赋值给currentBus
+                currentBus = busLocation.getName();
+                Log.i("driverSelectBusname",currentBus);
+            }
 
-        initLocation();
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // 如果没有项被选中，这个方法会被调用(m默认选择第一个工大线）
+            }
+        });
+        //获取登录按钮
+        button_login = findViewById(R.id.button_login);
+        //获取权限
+        // initLocation();
         /////////////////////////////////////////////////
         okHttpClient = new OkHttpClient();
         Request request = new Request.Builder()
@@ -107,14 +115,14 @@ public class DriverActivity extends AppCompatActivity {
                 okHttpClient.newCall(request).enqueue(new Callback() {
                     @Override
                     public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                        Log.e("SNOW","onFailure");
+                        Log.e("SNOW", "onFailure");
                     }
 
                     @Override
                     public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                         //ResponseBody responseBody = response.body();
-                        Log.e("SNOW","onResponse");
-                        if(!response.isSuccessful()){
+                        Log.e("SNOW", "onResponse");
+                        if (!response.isSuccessful()) {
 
                         }
 
@@ -123,8 +131,8 @@ public class DriverActivity extends AppCompatActivity {
                         {
                             //String result = responseBody.toString();
                             String responseBody = response.body().string();
-                            Log.i("SNOW",responseBody);
-                            List<BusLocation> buses = JSON.parseArray(responseBody.toString(), BusLocation.class);
+                            Log.i("SNOW", responseBody);
+                            buses = JSON.parseArray(responseBody.toString(), BusLocation.class);
                             Message msg = new Message();
                             msg.obj = buses;
                             msg.what = 0;
@@ -136,6 +144,7 @@ public class DriverActivity extends AppCompatActivity {
         }).start();
 
         ////////////////////////////////////////////////////
+        //司机单击登录按钮之后进行获取设备最新一次的位置
         button_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,71 +152,22 @@ public class DriverActivity extends AppCompatActivity {
             }
         });
     }
+    //获取权限进行页面跳转
+//    private void initLocation(){
+//       this.requestPermissions(permissions,0x123);
+//    }
 
-    private void initLocation(){
-        this.requestPermissions(permissions,0x123);
+    //定位设置
+//    private void enableLocationSettings() {
+//        Intent settingsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+//        startActivity(settingsIntent);
+//    }
+
+    //获取设备的当前位置
+    private void getLocation() {
+        //进行页面跳转传递参数
+        Intent intent = new Intent(DriverActivity.this,GPSActivity.class);
+        intent.putExtra("currentBus",currentBus);
+        startActivity(intent);
     }
-
-    private void enableLocationSettings() {
-        Intent settingsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-        startActivity(settingsIntent);
-    }
-    private void getLocation(){
-        int ret = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
-        ret = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
-
-        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                        !=PackageManager.PERMISSION_GRANTED){
-            return ;
-        }
-
-        Location location = locationManager.getLastKnownLocation(locationType);
-        if(location != null){
-
-        }
-        Toast.makeText(DriverActivity.this, "注册监听器", Toast.LENGTH_SHORT).show();
-        locationManager.requestLocationUpdates(locationType,10000,0,
-                locationListener);
-    }
-
-    private LocationListener locationListener = new LocationListener() {
-        @Override
-        public void onLocationChanged(@NonNull Location location) {
-            //Toast.makeText(DriverActivity.this, "LocationChanged", Toast.LENGTH_SHORT).show();
-            // 收到GPS的数据
-            String url = "http://" + host + "/Bus/updateBus" + "?busname="
-                    + currentBus + "&longtitude=" + location.getLongitude()
-                    + "&latitude=" + location.getLatitude();
-
-            Request request = new Request.Builder()
-                    .url(url)
-                    .build();
-            Message msg = new Message();
-            msg.what = 1;
-            msg.obj = request;
-            handler.sendMessage(msg);
-
-            //Toast.makeText(DriverActivity.this, url, Toast.LENGTH_SHORT).show();
-
-
-        }
-    };
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode == 0x123 && grantResults.length == 2 && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                && grantResults[1] == PackageManager.PERMISSION_GRANTED){
-            locationManager = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
-            locationType = LocationManager.GPS_PROVIDER;
-            isGPSEnabled = locationManager.isProviderEnabled(locationType);
-
-            if(!isGPSEnabled){
-                enableLocationSettings();
-            }
-        }
-    }
-
 }
