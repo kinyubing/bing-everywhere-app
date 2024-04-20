@@ -2,18 +2,25 @@ package cn.edu.hrbcu.everywhereapp.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
 import com.amap.api.maps2d.AMap;
+import com.amap.api.maps2d.CameraUpdate;
 import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.MapView;
+import com.amap.api.maps2d.model.BitmapDescriptorFactory;
+import com.amap.api.maps2d.model.CameraPosition;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 import cn.edu.hrbcu.everywhereapp.R;
 import cn.edu.hrbcu.everywhereapp.entity.BusLocation;
@@ -30,6 +37,7 @@ public class MapBusActivity extends AppCompatActivity {
     BusLocation busLocation=null;
     private Double longtitude;
     private Double latitude;
+    private String busPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,16 +79,31 @@ public class MapBusActivity extends AppCompatActivity {
                     //通过设置地图的中心点和缩放级别来显示特定的经纬度位置
                     longtitude=Double.parseDouble(split[1]);
                     latitude=Double.parseDouble(split[2]);
+//
                     //通过设置地图的中心点和缩放级别来显示特定的经纬度位置
                     //设置经纬度
-                    LatLng latLng = new LatLng(latitude,longtitude);
-                    //哈师范，哈商大
-                    //LatLng latLng = new LatLng(45.723665,126.621270);
-                    // LatLng latLng = new LatLng(45.123498,123.45334);
-                    //通过移动中心点的位置以及缩放级别设置地图
+                  LatLng latLng = new LatLng(latitude,longtitude);
+//                    //哈师范，哈商大
+//                    //LatLng latLng = new LatLng(45.723665,126.621270);
+//                    // LatLng latLng = new LatLng(45.123498,123.45334);
+//                    //通过移动中心点的位置以及缩放级别设置地图
                     aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 19));
-                    // 在地图上添加标记
-                    Marker marker = aMap.addMarker(new MarkerOptions().position(latLng).title(busname).snippet(busname+"的位置"));
+//                    // 在地图上添加标记
+//
+                    // 创建一个MarkerOptions对象，并设置位置和图标
+                    MarkerOptions markerOptions = new MarkerOptions()
+                            .position(new LatLng(latitude, longtitude))
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.bus))
+                            .title(busname)
+                            .snippet("我在这里")
+                            .anchor(0.5f, 1.0f) // 设置Marker的锚点
+                            .zIndex(100) // 设置Marker的层级
+                            .draggable(true) // 设置Marker是否可拖动
+                            .visible(true);// 设置Marker是否可见
+
+                   // 将Marker添加到地图上
+                    Marker marker = aMap.addMarker(markerOptions);
+                    marker.showInfoWindow();
                 } else {
                     // 服务器返回错误码的处理
                     int code = response.code();
