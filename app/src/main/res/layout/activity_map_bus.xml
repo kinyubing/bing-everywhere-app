@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,20 +6,95 @@
     android:orientation="vertical"
     tools:context=".activity.MapBusActivity">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="请使用高德地图显示Bus的位置"/>
-
-    <TextView
-        android:id="@+id/textview_busname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Bus name is : "/>
-
+    <!-- 地图视图 -->
     <com.amap.api.maps2d.MapView
         android:id="@+id/mapView002"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-</LinearLayout>
+    <!-- 导航栏 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:orientation="vertical"
+        android:background="@drawable/shape_30dp_corners"
+        android:backgroundTint="@color/white"
+        android:elevation="8dp"
+        android:padding="8dp"
+        android:layout_margin="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="16dp"
+        android:clipToPadding="true"
+        android:clipChildren="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/way">
+            </ImageView>
+
+            <!-- 当前路线 -->
+            <TextView
+                android:id="@+id/textview_busname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:layout_marginTop="8dp"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:text="当前路线："
+                android:padding="8dp" />
+        </LinearLayout>
+
+        <!-- 添加分割线 -->
+        <View
+            android:layout_marginLeft="38dp"
+            android:layout_width="250dp"
+            android:layout_height="1sp"
+            android:layout_marginTop="5dp"
+            android:background="#dcdcdc"/>
+
+        <!-- 学校 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/schoollocation">
+            </ImageView>
+
+            <TextView
+                android:id="@+id/textview_school"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:text="所在学校："
+                android:padding="8dp" />
+
+            <Spinner
+                android:id="@+id/spinner_school"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dropdown" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

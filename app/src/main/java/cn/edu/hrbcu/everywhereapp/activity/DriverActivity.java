@@ -24,6 +24,7 @@ import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -98,6 +99,16 @@ public class DriverActivity extends AppCompatActivity {
         }
         //获取车辆spinner列表框
         spinner = (Spinner) findViewById(R.id.spinner_buses);
+
+        // 创建一个 ArrayAdapter 适配器，并将数据与 Spinner 绑定  ??BusAdapter和BusLocationAdapter是什么
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+//                R.array.schools_array, android.R.layout.simple_spinner_item);
+//
+//        // 设置下拉菜单的样式
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//
+//        // 将适配器添加到 Spinner 上
+//        spinner.setAdapter(adapter);
 
         //为spinner选择子项添加监听器
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

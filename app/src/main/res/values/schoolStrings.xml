@@ -1,0 +1,10 @@
+<resources>
+    <!-- 定义学校名称数组 -->
+    <string-array name="schools_array">
+        <item>哈商大</item>
+        <item>哈工程</item>
+        <item>哈理工</item>
+        <item>哈师范</item>
+        <item>黑龙江大学</item>
+    </string-array>
+</resources>
