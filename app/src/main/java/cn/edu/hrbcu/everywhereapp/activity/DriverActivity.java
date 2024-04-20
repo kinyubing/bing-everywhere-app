@@ -33,6 +33,7 @@ import com.alibaba.fastjson2.JSON;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Locale;
 
@@ -97,6 +98,7 @@ public class DriverActivity extends AppCompatActivity {
         }
         //获取车辆spinner列表框
         spinner = (Spinner) findViewById(R.id.spinner_buses);
+
         //为spinner选择子项添加监听器
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -178,15 +180,15 @@ public class DriverActivity extends AppCompatActivity {
 
         okHttpClient = new OkHttpClient();
         //先进行本地测试
-        Request request = new Request.Builder()
-                .url("http://192.168.243.167:8888/Driver/validateDriver?username=" + username + "&password="
-                        + password)
-                .build();
-        //服务器测试
 //        Request request = new Request.Builder()
-//                .url("http://"+host+"/Driver/validateDriver?username=" + username + "&password="
+//                .url("http://192.168.243.167:8888/Driver/validateDriver?username=" + username + "&password="
 //                        + password)
 //                .build();
+        //服务器测试
+        Request request = new Request.Builder()
+                .url("http://"+host+"/Driver/validateDriver?username=" + username + "&password="
+                        + password)
+                .build();
 
         new Thread(new Runnable() {
             @Override

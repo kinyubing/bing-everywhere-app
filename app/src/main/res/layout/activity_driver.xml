@@ -12,25 +12,19 @@
         android:layout_width="match_parent"
         android:layout_height="76dp"
         android:gravity="center_horizontal"
-        android:text="登录页面"
+        android:text="易通勤系统"
         android:textSize="30sp"
         android:textStyle="bold"
-        android:textColor="#ffd700"
+        android:textColor="#6750a4"
         android:layout_marginTop="150dp"/>
 
-    <Spinner
-        android:id="@+id/spinner_buses"
-        android:gravity="center"
-        android:layout_marginTop="50dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginTop="128dp"
+        android:layout_marginTop="20dp"
         android:hint="用户名">
 
         <!--this is the actual edit text which takes the input-->
@@ -62,12 +56,53 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="16dp">
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/direction"
+            android:layout_gravity="center_vertical"
+            android:adjustViewBounds="true"
+            android:layout_marginStart="17dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="路线"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="8dp"/>
+
+        <Spinner
+            android:id="@+id/spinner_buses"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:spinnerMode="dropdown"
+            android:background="@drawable/selector_for_custom_spinner"
+            android:popupBackground="@drawable/shape_for_custom_spinner"
+            android:layout_marginStart="8dp"
+            android:backgroundTint="@color/black"
+            android:dropDownVerticalOffset="50dp"
+            />
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/button_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="32dp"
         android:padding="16dp"
         android:text="登  录 / 注 册"
