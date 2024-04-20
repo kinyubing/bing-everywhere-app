@@ -22,6 +22,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.alibaba.fastjson2.JSON;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -30,6 +32,8 @@ import cn.edu.hrbcu.everywhereapp.R;
 import cn.edu.hrbcu.everywhereapp.adapter.BusAdapter;
 import cn.edu.hrbcu.everywhereapp.entity.BusLocation;
 import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -46,10 +50,9 @@ public class GPSActivity extends AppCompatActivity implements LocationListener {
     // 定义位置管理器
     private LocationManager locationManager;
     private final String host = "82.156.113.196";
+    //private final String localhost = "192.168.243.167";
     private String currentBus = "工大线";
     OkHttpClient okHttpClient = null;
-    private boolean isGPSEnabled;
-    private String locationType;
 
     Handler handler = new Handler(){
         @Override
@@ -90,24 +93,17 @@ public class GPSActivity extends AppCompatActivity implements LocationListener {
         nowAddress = findViewById(R.id.tv_nowAddress);
         lat = findViewById(R.id.tv_latitude);
         lon = findViewById(R.id.tv_longitude);
-
-        // 判断当前是否拥有使用GPS的权限
-        if (ActivityCompat.checkSelfPermission(GPSActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-        {
-            // 申请权限
-            ActivityCompat.requestPermissions(GPSActivity.this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 100);
+        //在获取设备权限之前已经进行用户名和密码校验
+            //校验通过才进行授权获取位置信息
+            if (ActivityCompat.checkSelfPermission(GPSActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // 申请权限
+                ActivityCompat.requestPermissions(GPSActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 100);
+            }
+            //获取当前设备的位置信息
+            getLocation();
         }
 
-        //获取当前设备的位置信息
-        getLocation();
-        /*
-        或者这样子也是可以的
-        // 获取当前位置管理器
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        // 启动位置请求
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, MainActivity.this);
-        */
-    }
+
     @SuppressLint("MissingPermission")
     private void getLocation() {
         // 获取当前位置管理器
