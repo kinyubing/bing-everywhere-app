@@ -36,9 +36,9 @@
         <activity
             android:name=".activity.GPSActivity"
             android:exported="false" />
-<!--        <activity-->
-<!--            android:name=".activity.DriverBetweenGps"-->
-<!--            android:exported="false" />-->
+        <activity
+            android:name=".activity.DriverBetweenGps"
+            android:exported="false" />
         <activity
             android:name=".activity.MainActivity"
             android:exported="true">
