@@ -66,12 +66,12 @@
         android:id="@+id/button_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textSize="18sp"
-        android:padding="16dp"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="32dp"
-        android:text="登  录"/>
+        android:padding="16dp"
+        android:text="登  录 / 注 册"
+        android:textSize="18sp" />
 
 
 </LinearLayout>
