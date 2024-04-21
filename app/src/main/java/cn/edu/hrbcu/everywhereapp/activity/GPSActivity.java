@@ -152,6 +152,7 @@ public class GPSActivity extends AppCompatActivity implements LocationListener {
         // 收到GPS的数据(传递currentBus)
         //获取传递过来的busname
         currentBus= getIntent().getStringExtra("currentBus");
+
         String url = "http://" + host + "/Bus/updateBus" + "?busname="
                 + currentBus + "&longtitude=" + longitude
                 + "&latitude=" + latitude;

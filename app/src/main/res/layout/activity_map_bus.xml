@@ -36,7 +36,7 @@
                 android:layout_width="22dp"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="9dp"
                 android:layout_marginLeft="10dp"
                 android:src="@drawable/way">
             </ImageView>
@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/white"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="0dp"
                 android:textSize="18sp"
                 android:textColor="@android:color/black"
                 android:text="当前路线："
