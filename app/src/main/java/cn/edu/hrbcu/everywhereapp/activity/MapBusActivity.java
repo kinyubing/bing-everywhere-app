@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Locale;
 
 import cn.edu.hrbcu.everywhereapp.R;
+import cn.edu.hrbcu.everywhereapp.adapter.BusAdapter;
 import cn.edu.hrbcu.everywhereapp.entity.BusLocation;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -50,16 +51,16 @@ public class MapBusActivity extends AppCompatActivity {
 
         //配置所在学校选项
         // 找到Spinner控件
-        spinnerSchool = findViewById(R.id.spinner_school);
+//        spinnerSchool = findViewById(R.id.spinner_school);
 
         // 创建一个 ArrayAdapter 适配器，并将数据与 Spinner 绑定
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.schools_array, android.R.layout.simple_spinner_item);
+//        BusAdapter adapter = BusAdapter.createFromResource(this, R.array.schools_array, android.R.layout.simple_spinner_item);
 
         // 设置下拉菜单的样式
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // 将适配器添加到 Spinner 上
-        spinnerSchool.setAdapter(adapter);
+//        spinnerSchool.setAdapter(adapter);
 
         //绘制地图
         MapView mapView = (MapView) findViewById(R.id.mapView002);

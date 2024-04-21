@@ -16,6 +16,7 @@ import java.util.List;
 
 import cn.edu.hrbcu.everywhereapp.entity.BusLocation;
 
+//
 public class BusLocationApapter extends ArrayAdapter<BusLocation> {
     private List<BusLocation> busLocations = null;
 
@@ -48,24 +49,25 @@ public class BusLocationApapter extends ArrayAdapter<BusLocation> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+//        获取当前子项内容
         BusLocation busLocation = getItem(position);
         View view = LayoutInflater.from(getContext()).inflate(R.layout.buslocation_item,parent,false);
         TextView busname = view.findViewById(R.id.bus_name);
-        TextView longtitude = view.findViewById(R.id.longtitude);
-        TextView latitude = view.findViewById(R.id.latitude);
+//        TextView longtitude = view.findViewById(R.id.longtitude);
+//        TextView latitude = view.findViewById(R.id.latitude);
 
         busname.setText(busLocation.getName());
-        if(busLocation.getLongtitude() == null){
-            longtitude.setText("--");
-        }else{
-            longtitude.setText(dblToLocation(busLocation.getLongtitude()));
-        }
-
-        if(busLocation.getLatitude() == null){
-            latitude.setText("--");
-        }else{
-            latitude.setText(dblToLocation(busLocation.getLatitude()));
-        }
+//        if(busLocation.getLongtitude() == null){
+//            longtitude.setText("--");
+//        }else{
+//            longtitude.setText(dblToLocation(busLocation.getLongtitude()));
+//        }
+//
+//        if(busLocation.getLatitude() == null){
+//            latitude.setText("--");
+//        }else{
+//            latitude.setText(dblToLocation(busLocation.getLatitude()));
+//        }
 
         return view;
     }
