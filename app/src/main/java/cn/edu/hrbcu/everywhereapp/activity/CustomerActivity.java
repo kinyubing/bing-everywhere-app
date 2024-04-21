@@ -53,21 +53,12 @@ public class CustomerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_customer);
         //////////////////////////////////////////////
         listView = findViewById(R.id.bus_listview);
-        /*//3、准备数据
-        String[] data={"菠萝","芒果","石榴","葡萄", "苹果", "橙子", "西瓜","菠萝","芒果","石榴","葡萄", "苹果", "橙子", "西瓜","菠萝","芒果","石榴","葡萄", "苹果", "橙子", "西瓜"};
-        //4、创建适配器 连接数据源和控件的桥梁
-        //参数 1：当前的上下文环境
-        //参数 2：当前列表项所加载的布局文件
-        //(android.R.layout.simple_list_item_1)这里的布局文件是Android内置的，里面只有一个textview控件用来显示简单的文本内容
-        //参数 3：数据源
-        ArrayAdapter<String> adapter=new ArrayAdapter<>(CustomerActivity.this,android.R.layout.simple_list_item_1,data);
-        //5、将适配器加载到控件中
-        listView.setAdapter(adapter);*/
-        //6、为列表中选中的项添加单击响应事件
+        //1、为列表中选中的项添加单击响应事件
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
+                //获得乘客选择的路线名
                 BusLocation busLocation= buses.get(i) ;
                 Intent intent = new Intent(CustomerActivity.this,MapBusActivity.class);
                 intent.putExtra("busname",busLocation.getName());
