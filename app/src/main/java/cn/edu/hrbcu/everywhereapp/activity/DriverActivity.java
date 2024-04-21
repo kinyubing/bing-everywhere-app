@@ -70,6 +70,7 @@ public class DriverActivity extends AppCompatActivity {
     private final String okInfo="用户名和密码校验成功！";
     private final String failInfo="用户名或密码错误！";
     private final String registerInfo="用户注册成功！";
+    private final String emptyInputInfo="用户名或密码为空！";
 
 
     Handler handler = new Handler() {
@@ -93,9 +94,14 @@ public class DriverActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver);
         //获取登录失败的信息
-        String failInfo=getIntent().getStringExtra("failInfo");
-        if(failInfo!=null){
-            Toast.makeText(DriverActivity.this, failInfo, Toast.LENGTH_SHORT).show();
+        String failInfo2=getIntent().getStringExtra("failInfo");
+        //获取输入为空的消息
+        String emptyInputInfo2 = getIntent().getStringExtra("emptyInputInfo");
+        if(failInfo2!=null){
+            Toast.makeText(DriverActivity.this, failInfo2, Toast.LENGTH_SHORT).show();
+        }
+        if(emptyInputInfo2!=null){
+            Toast.makeText(DriverActivity.this, emptyInputInfo2, Toast.LENGTH_SHORT).show();
         }
         //获取车辆spinner列表框
         spinner = (Spinner) findViewById(R.id.spinner_buses);
@@ -186,20 +192,25 @@ public class DriverActivity extends AppCompatActivity {
         TextInputEditText passwordInput = findViewById(R.id.edit_text_password);
         username= String.valueOf(usernameInput.getText());
         password = String.valueOf(passwordInput.getText());
+        //字符串首尾去除空格
+        username= username.trim();
+        password= password.trim();
         Log.i("driverUsername",username);
         Log.i("driverPassword",password);
 
+
+
         okHttpClient = new OkHttpClient();
         //先进行本地测试
-//        Request request = new Request.Builder()
-//                .url("http://192.168.243.167:8888/Driver/validateDriver?username=" + username + "&password="
-//                        + password)
-//                .build();
-        //服务器测试
         Request request = new Request.Builder()
-                .url("http://"+host+"/Driver/validateDriver?username=" + username + "&password="
+                .url("http://192.168.243.167:8888/Driver/validateDriver?username=" + username + "&password="
                         + password)
                 .build();
+        //服务器测试
+//        Request request = new Request.Builder()
+//                .url("http://"+host+"/Driver/validateDriver?username=" + username + "&password="
+//                        + password)
+//                .build();
 
         new Thread(new Runnable() {
             @Override
@@ -239,7 +250,13 @@ public class DriverActivity extends AppCompatActivity {
                                 Intent intent = new Intent(DriverActivity.this, DriverActivity.class);
                                 intent.putExtra("failInfo",failInfo);
                                 startActivity(intent);
-                            }
+                            }else if(responseBody.equals(emptyInputInfo)){
+                            //用户名或密码输入为空需要进行页面跳转到登录页面
+                            //  Toast.makeText(DriverBetweenGps.this, responseBody, Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(DriverActivity.this, DriverActivity.class);
+                            intent.putExtra("emptyInputInfo",emptyInputInfo);
+                            startActivity(intent);
+                        }
 
                         }
 
@@ -250,4 +267,5 @@ public class DriverActivity extends AppCompatActivity {
         }).start();
 
     }
+
 }

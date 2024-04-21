@@ -77,7 +77,7 @@ public class CustomerActivity extends AppCompatActivity {
         });
         Request request = new Request.Builder()
                 .url("http://" + host + "/Bus/queryAllBus")
-                .build();
+                .build();//在显示所有的路线,例如工大线、工程线等。
 
         new Thread(new Runnable() {
             @Override
