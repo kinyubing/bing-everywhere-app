@@ -106,8 +106,8 @@ public class GPSActivity extends AppCompatActivity implements LocationListener {
         latitude = location.getLatitude();
         // 获取当前经纬度以及司机所选的线路
         longitude = location.getLongitude();
-        latitude = Double.parseDouble(String.valueOf(latitude).replace("-", ""));
-        longitude = Double.parseDouble(String.valueOf(longitude).replace("-", ""));
+        //latitude = Double.parseDouble(String.valueOf(latitude).replace("-", ""));
+       // longitude = Double.parseDouble(String.valueOf(longitude).replace("-", ""));
         lat.setText("纬度：" + latitude);
         lon.setText("经度：" + longitude);
         currentBus = getIntent().getStringExtra("currentBus");
