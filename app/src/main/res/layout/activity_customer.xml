@@ -8,6 +8,7 @@
     android:layout_gravity="top|center"
     android:dividerHeight="10dp"
     android:background="@drawable/cusbackground"
+    android:id="@+id/customer_layout"
     tools:context=".activity.CustomerActivity">
 
 <!--    <TextView-->

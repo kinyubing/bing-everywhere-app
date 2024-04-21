@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +36,8 @@ public class CustomerActivity extends AppCompatActivity {
     private final String host = "82.156.113.196";
     private ListView listView = null;
 
+    private LinearLayout linearLayout = null;
+
     OkHttpClient mClient = new OkHttpClient();
 
     List<BusLocation> buses ;
@@ -53,6 +57,8 @@ public class CustomerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_customer);
         //////////////////////////////////////////////
         listView = findViewById(R.id.bus_listview);
+        linearLayout = findViewById(R.id.customer_layout);
+        requestAllBus();
         //1、为列表中选中的项添加单击响应事件
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
@@ -66,6 +72,42 @@ public class CustomerActivity extends AppCompatActivity {
                 Toast.makeText(CustomerActivity.this,"您选择的路线是：" + busLocation.getName(),Toast.LENGTH_LONG).show();
             }
         });
+
+
+        linearLayout.setOnTouchListener(new View.OnTouchListener(){
+            int x,y;
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        x = (int)event.getRawX();
+                        y = (int)event.getRawY();
+//                        Toast.makeText(CustomerActivity.this, "OnTouch!!!", Toast.LENGTH_SHORT).show();
+//                        requestAllBus();
+                        break;
+
+                    case MotionEvent.ACTION_MOVE:
+                        int nowX = (int)event.getRawX();
+                        int nowY = (int)event.getRawY();
+
+                        int movedX = nowX - x;
+                        int movedY = nowY - y;
+                        int destance = movedX * movedX + movedY * movedY;
+                        if(destance > 100){
+                            Toast.makeText(CustomerActivity.this, "OnTouch!!!", Toast.LENGTH_SHORT).show();
+                            requestAllBus();
+                        }
+
+                        break;
+                }
+                return false;
+            }
+        });
+
+
+    }
+
+    private void requestAllBus(){
         Request request = new Request.Builder()
                 .url("http://" + host + "/Bus/queryAllBus")
                 .build();//在显示所有的路线,例如工大线、工程线等。
@@ -92,6 +134,5 @@ public class CustomerActivity extends AppCompatActivity {
             }
         }).start();
     }
-
 
 }
