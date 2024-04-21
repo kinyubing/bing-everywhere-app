@@ -98,7 +98,7 @@ public class GPSActivity extends AppCompatActivity implements LocationListener {
     }
 
 
-    // 当位置改变时执行，除了移动设置距离为 0时
+    // 当位置改变时执行，除了移动设置距离为 0时，回调函数
     @Override
     public void onLocationChanged(@NonNull Location location) {
 
@@ -106,11 +106,8 @@ public class GPSActivity extends AppCompatActivity implements LocationListener {
         latitude = location.getLatitude();
         // 获取当前经纬度以及司机所选的线路
         longitude = location.getLongitude();
-        //latitude = Double.parseDouble(String.valueOf(latitude).replace("-", ""));
-       // longitude = Double.parseDouble(String.valueOf(longitude).replace("-", ""));
         lat.setText("纬度：" + latitude);
         lon.setText("经度：" + longitude);
-        currentBus = getIntent().getStringExtra("currentBus");
         // 定义位置解析
         Geocoder geocoder = new Geocoder(GPSActivity.this, Locale.getDefault());
         try {
@@ -148,10 +145,10 @@ public class GPSActivity extends AppCompatActivity implements LocationListener {
                     @Override
                     public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                         //若是数据更新成功之后需要重新回到定位界面
-                        String responseBody= response.body().string();
+                       /* String responseBody= response.body().string();
                         Log.i("GPSSendToEnd",responseBody);
                         Intent intent = new Intent(GPSActivity.this, GPSActivity.class);
-                        startActivity(intent);
+                        startActivity(intent);*/
 
                     }
                 });

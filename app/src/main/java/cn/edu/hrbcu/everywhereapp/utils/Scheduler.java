@@ -27,6 +27,7 @@ public class Scheduler {
     private Double longtitude;
     private Double latitude;
     private AMap aMap=null;
+
     public void startScheduler(String busname,AMap aMap) {
         this.busname=busname;
         this.aMap = aMap;
@@ -78,8 +79,8 @@ public class Scheduler {
                     aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 19));
                     // 在地图上添加标记
                     // 创建一个MarkerOptions对象，并设置位置和图标
-                    MarkerOptions markerOptions = new MarkerOptions()
-                            .position(new LatLng(latitude, longtitude))
+                    MarkerOptions markerOptions = new MarkerOptions();
+                            markerOptions.position(new LatLng(latitude, longtitude))
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.bus))
                             .title(busname)
                             .snippet("我在这里")
@@ -89,6 +90,7 @@ public class Scheduler {
                             .visible(true);// 设置Marker是否可见
 
                     // 将Marker添加到地图上
+                    //移除marker图标
                     Marker marker = aMap.addMarker(markerOptions);
                     marker.showInfoWindow();
                 } else {
