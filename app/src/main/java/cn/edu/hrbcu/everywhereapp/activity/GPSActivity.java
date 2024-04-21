@@ -94,7 +94,7 @@ public class GPSActivity extends AppCompatActivity implements LocationListener {
         // LocationManager.GPS_PROVIDER GPS定位
         // LocationManager.NETWORK_PROVIDER 网络定位
         // LocationManager.PASSIVE_PROVIDER 被动接受定位信息
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, GPSActivity.this);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, GPSActivity.this);
     }
 
 

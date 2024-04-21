@@ -28,6 +28,8 @@ public class Scheduler {
     private Double latitude;
     private AMap aMap=null;
 
+    private  Marker marker = null;
+
     public void startScheduler(String busname,AMap aMap) {
         this.busname=busname;
         this.aMap = aMap;
@@ -39,7 +41,7 @@ public class Scheduler {
                //运行定时任务
                 sendOkHttpRequest();
             }
-        }, 0, 10, TimeUnit.SECONDS); // 每10秒钟执行一次
+        }, 0, 5, TimeUnit.SECONDS); // 每10秒钟执行一次
     }
 
     public void stopScheduler() {
@@ -91,8 +93,13 @@ public class Scheduler {
 
                     // 将Marker添加到地图上
                     //移除marker图标
-                    Marker marker = aMap.addMarker(markerOptions);
-                    marker.showInfoWindow();
+                    if(marker == null){
+                        marker = aMap.addMarker(markerOptions);
+                        marker.showInfoWindow();
+                    }else{
+                        marker.setPosition(new LatLng(latitude, longtitude));
+                    }
+
                 } else {
                     // 服务器返回错误码的处理
                     int code = response.code();
