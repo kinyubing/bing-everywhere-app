@@ -36,8 +36,6 @@ public class CustomerActivity extends AppCompatActivity {
     private final String host = "82.156.113.196";
     private ListView listView = null;
 
-    private LinearLayout linearLayout = null;
-
     OkHttpClient mClient = new OkHttpClient();
 
     List<BusLocation> buses ;
@@ -57,7 +55,6 @@ public class CustomerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_customer);
         //////////////////////////////////////////////
         listView = findViewById(R.id.bus_listview);
-        linearLayout = findViewById(R.id.customer_layout);
         requestAllBus();
         //1、为列表中选中的项添加单击响应事件
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
