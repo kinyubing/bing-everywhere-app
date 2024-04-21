@@ -52,6 +52,14 @@
                 android:textColor="@android:color/black"
                 android:text="当前路线："
                 android:padding="8dp" />
+
+            <Button
+                android:id="@+id/button_showBusstop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="显示站点"
+                android:layout_gravity="right">
+            </Button>
         </LinearLayout>
 
         <!-- 添加分割线 -->
@@ -94,6 +102,10 @@
 <!--                android:layout_height="wrap_content"-->
 <!--                android:spinnerMode="dropdown" />-->
 <!--        </LinearLayout>-->
+
+
+    
+
 
     </LinearLayout>
 

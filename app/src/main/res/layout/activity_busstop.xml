@@ -7,23 +7,21 @@
     android:orientation="vertical"
     android:layout_gravity="top|center"
     android:dividerHeight="10dp"
-    android:background="@drawable/cusbackground"
+    android:background="#e8e5dc"
     tools:context=".activity.CustomerActivity">
 
-<!--    <TextView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="请选择您的路线"-->
-<!--        android:textSize="24dp"/>-->
-
-    <ImageView
-        android:layout_marginTop="0dp"
+    <TextView
+        android:id="@+id/textview_busname"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:src="@drawable/cat"/>
-
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:layout_marginTop="0dp"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:text="当前路线："
+        android:padding="8dp" />
     <ListView
-        android:id="@+id/bus_listview"
+        android:id="@+id/busstop_listview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="0dp"
@@ -31,5 +29,5 @@
         android:dividerHeight="30dp"
         android:divider="#00000000"/>
 
-</LinearLayout>
 
+</LinearLayout>
