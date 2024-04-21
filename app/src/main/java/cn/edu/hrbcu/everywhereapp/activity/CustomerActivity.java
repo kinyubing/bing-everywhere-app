@@ -74,7 +74,7 @@ public class CustomerActivity extends AppCompatActivity {
         });
 
 
-        linearLayout.setOnTouchListener(new View.OnTouchListener(){
+        listView.setOnTouchListener(new View.OnTouchListener(){
             int x,y;
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -86,14 +86,14 @@ public class CustomerActivity extends AppCompatActivity {
 //                        requestAllBus();
                         break;
 
-                    case MotionEvent.ACTION_MOVE:
+                    case MotionEvent.ACTION_UP:
                         int nowX = (int)event.getRawX();
                         int nowY = (int)event.getRawY();
 
                         int movedX = nowX - x;
                         int movedY = nowY - y;
                         int destance = movedX * movedX + movedY * movedY;
-                        if(destance > 100){
+                        if(destance > 10000){
                             Toast.makeText(CustomerActivity.this, "OnTouch!!!", Toast.LENGTH_SHORT).show();
                             requestAllBus();
                         }
