@@ -204,15 +204,15 @@ public class DriverActivity extends AppCompatActivity {
 
         okHttpClient = new OkHttpClient();
         //先进行本地测试
-        Request request = new Request.Builder()
-                .url("http://192.168.243.167:8888/Driver/validateDriver?username=" + username + "&password="
-                        + password)
-                .build();
-        //服务器测试
 //        Request request = new Request.Builder()
-//                .url("http://"+host+"/Driver/validateDriver?username=" + username + "&password="
+//                .url("http://127.0.0.1:8888/Driver/validateDriver?username=" + username + "&password="
 //                        + password)
 //                .build();
+        //服务器测试
+        Request request = new Request.Builder()
+                .url("http://"+host+"/Driver/validateDriver?username=" + username + "&password="
+                        + password)
+                .build();
 
         new Thread(new Runnable() {
             @Override

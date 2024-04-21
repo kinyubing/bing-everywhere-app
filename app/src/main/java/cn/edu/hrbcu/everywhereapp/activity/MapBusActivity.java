@@ -72,9 +72,9 @@ public class MapBusActivity extends AppCompatActivity {
         String busname = getIntent().getStringExtra("busname");
         textView.setText(text + busname);
         /////////////////////////////////////////////////
+        okHttpClient = new OkHttpClient();
         // 显示高德地图
         //1.根据busname查询（通过okhttp后台）司机的经纬度
-        okHttpClient = new OkHttpClient();
         Request request = new Request.Builder()
                 .url("http://" + host + "/Bus/queryBus?busname="+busname)
                 .build();
@@ -101,7 +101,7 @@ public class MapBusActivity extends AppCompatActivity {
 //
                     //通过设置地图的中心点和缩放级别来显示特定的经纬度位置
                     //设置经纬度
-                  LatLng latLng = new LatLng(latitude,longtitude);
+                    LatLng latLng = new LatLng(latitude,longtitude);
 //                    //哈师范，哈商大
 //                    //LatLng latLng = new LatLng(45.723665,126.621270);
 //                    // LatLng latLng = new LatLng(45.123498,123.45334);
@@ -120,7 +120,7 @@ public class MapBusActivity extends AppCompatActivity {
                             .draggable(true) // 设置Marker是否可拖动
                             .visible(true);// 设置Marker是否可见
 
-                   // 将Marker添加到地图上
+                    // 将Marker添加到地图上
                     Marker marker = aMap.addMarker(markerOptions);
                     marker.showInfoWindow();
                 } else {
@@ -131,6 +131,35 @@ public class MapBusActivity extends AppCompatActivity {
                 }
             }
         });
+        Log.i("linyubing","我来了");
+        //根据busname查询该线路下的所有站点
+        Request requestSites = new Request.Builder()
+                .url("http://" + host + "/Router/queryRouterByBusname?busname="+busname)
+                .build();
+        //采用异步的方式发送请求
+        okHttpClient.newCall(requestSites).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                // 请求失败的处理
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    // 请求成功的处理
+                    String responseBody= response.body().string();
+                    Log.i("getAllSites",responseBody);
+                    //获取到所有的站点后进行下一步操作
+                } else {
+                    // 服务器返回错误码的处理
+                    int code = response.code();
+                    // 根据code值处理不同的错误情况
+                    Log.i("linyubing", String.valueOf(code));
+                }
+            }
+        });
+
 
     }
 }
