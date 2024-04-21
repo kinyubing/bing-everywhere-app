@@ -2,37 +2,20 @@ package cn.edu.hrbcu.everywhereapp.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.location.Address;
-import android.location.Geocoder;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.amap.api.maps2d.AMap;
-import com.amap.api.maps2d.CameraUpdate;
-import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.MapView;
-import com.amap.api.maps2d.model.BitmapDescriptorFactory;
-import com.amap.api.maps2d.model.CameraPosition;
-import com.amap.api.maps2d.model.LatLng;
-import com.amap.api.maps2d.model.Marker;
-import com.amap.api.maps2d.model.MarkerOptions;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
 
 import cn.edu.hrbcu.everywhereapp.R;
-import cn.edu.hrbcu.everywhereapp.adapter.BusAdapter;
 import cn.edu.hrbcu.everywhereapp.entity.BusLocation;
 import cn.edu.hrbcu.everywhereapp.utils.Scheduler;
-import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class MapBusActivity extends AppCompatActivity {
     private TextView textView = null;
@@ -42,11 +25,17 @@ public class MapBusActivity extends AppCompatActivity {
     private Double longtitude;
     private Double latitude;
     private String busname;
+    OkHttpClient mClient = new OkHttpClient();
+    private Button button;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_bus);
+        busname= getIntent().getStringExtra("busname");
+        //根据busname查询该路线下的所有站点信息
+      //  http://82.156.113.196/Router/queryRouterByBusname?busname=工大线
 
         //绘制地图
         MapView mapView = (MapView) findViewById(R.id.mapView002);
@@ -57,10 +46,21 @@ public class MapBusActivity extends AppCompatActivity {
         String text = textView.getText().toString();
         busname = getIntent().getStringExtra("busname");
         textView.setText(text + busname);
+        button = findViewById(R.id.button_showBusstop);
+        button.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MapBusActivity.this,BusStopActivity.class);
+                intent.putExtra("busname",busname);
+                startActivity(intent);
+                Log.i("linyubing","onclick");
+            }
+        });
         //启动定时器
         Scheduler scheduler = new Scheduler();
         scheduler.startScheduler(busname,aMap);
-        /////////////////////////////////////////////////
+
 
     }
     //销毁定时任务

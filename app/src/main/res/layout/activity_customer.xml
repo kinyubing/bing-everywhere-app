@@ -31,7 +31,5 @@
         android:dividerHeight="30dp"
         android:divider="#00000000"/>
 
-
-
-
 </LinearLayout>
+
