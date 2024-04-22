@@ -1,10 +1,27 @@
 <resources>
     <!-- 定义学校名称数组 -->
-    <string-array name="schools_array">
-        <item>哈商大</item>
-        <item>哈工程</item>
-        <item>哈理工</item>
-        <item>哈师范</item>
-        <item>黑龙江大学</item>
+    <string-array name="zooms_array">
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+<!--        <item>11</item>-->
+<!--        <item>12</item>-->
+<!--        <item>13</item>-->
+<!--        <item>14</item>-->
+<!--        <item>15</item>-->
+<!--        <item>16</item>-->
+<!--        <item>17</item>-->
+<!--        <item>18</item>-->
+<!--        <item>19</item>-->
+<!--        <item>20</item>-->
+
     </string-array>
 </resources>

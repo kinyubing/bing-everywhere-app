@@ -5,6 +5,7 @@ import android.util.Log;
 import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.model.BitmapDescriptorFactory;
+import com.amap.api.maps2d.model.CameraPosition;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
@@ -29,8 +30,12 @@ public class Scheduler {
     private AMap aMap=null;
 
     private  Marker marker = null;
+    //地图缩放级别
+//private String currentZoom=null;
+    private float zoom=19;
 
     public void startScheduler(String busname,AMap aMap) {
+
         this.busname=busname;
         this.aMap = aMap;
         //使用线程池来执行定时任务
@@ -41,8 +46,11 @@ public class Scheduler {
                //运行定时任务
                 sendOkHttpRequest();
             }
-        }, 0, 5, TimeUnit.SECONDS); // 每10秒钟执行一次
+        }, 0, 3, TimeUnit.SECONDS); // 每10秒钟执行一次
     }
+
+
+
 
     public void stopScheduler() {
         if (scheduler != null) {
@@ -77,8 +85,25 @@ public class Scheduler {
                     //通过设置地图的中心点和缩放级别来显示特定的经纬度位置
                     //设置经纬度
                     LatLng latLng = new LatLng(latitude,longtitude);
+
                     //通过移动中心点的位置以及缩放级别设置地图
-                    aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 19));
+                    aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,zoom));
+
+                   // onCameraChange 方法会在地图的缩放级别发生变化时被调用
+                    aMap.setOnCameraChangeListener(new AMap.OnCameraChangeListener() {
+                        @Override
+                        public void onCameraChange(CameraPosition cameraPosition) {
+                            // 这里的cameraPosition包含了当前的缩放级别
+                             zoom = cameraPosition.zoom;
+                            // 根据缩放级别执行相应操作
+                            aMap.moveCamera(CameraUpdateFactory.zoomTo(zoom));
+                        }
+
+                        @Override
+                        public void onCameraChangeFinish(CameraPosition cameraPosition) {
+                            // 同上，但在这里可以执行一些完成时的操作
+                        }
+                    });
                     // 在地图上添加标记
                     // 创建一个MarkerOptions对象，并设置位置和图标
                     MarkerOptions markerOptions = new MarkerOptions();

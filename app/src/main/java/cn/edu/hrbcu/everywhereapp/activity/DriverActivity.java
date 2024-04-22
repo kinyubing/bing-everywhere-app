@@ -93,6 +93,11 @@ public class DriverActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver);
+        //获取用户定位权限
+        if (ActivityCompat.checkSelfPermission(DriverActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // 申请权限
+            ActivityCompat.requestPermissions(DriverActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 100);
+        }
         //获取登录失败的信息
         String failInfo2=getIntent().getStringExtra("failInfo");
         //获取输入为空的消息
@@ -245,6 +250,7 @@ public class DriverActivity extends AppCompatActivity {
                                 Intent intent = new Intent(DriverActivity.this, GPSActivity.class);
                                 intent.putExtra("currentBus",currentBus);
                                 startActivity(intent);
+
 //
                             } else if (responseBody.equals(failInfo)) {
                                 //校验失败需要进行页面跳转到登录页面并返回失败的信息

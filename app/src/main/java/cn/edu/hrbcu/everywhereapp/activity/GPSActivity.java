@@ -58,6 +58,7 @@ public class GPSActivity extends AppCompatActivity implements LocationListener {
     private final String updateGpsFail="NoBus Or Fail";
     private String info;
     private String flag="ok";
+    //黑屏问题
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,12 +74,12 @@ public class GPSActivity extends AppCompatActivity implements LocationListener {
         lon.setText("经度：" + longitude2);
         nowAddress.setText("位置稍后更新");
 
-        //在获取设备权限之前已经进行用户名和密码校验
-        //校验通过才进行授权获取位置信息
-        if (ActivityCompat.checkSelfPermission(GPSActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // 申请权限
-                ActivityCompat.requestPermissions(GPSActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 100);
-            }
+//        //在获取设备权限之前已经进行用户名和密码校验
+//        //校验通过才进行授权获取位置信息
+//        if (ActivityCompat.checkSelfPermission(GPSActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//                // 申请权限
+//                ActivityCompat.requestPermissions(GPSActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 100);
+//            }
 
 
         //获取当前设备的位置信息
@@ -88,8 +89,22 @@ public class GPSActivity extends AppCompatActivity implements LocationListener {
 
     @SuppressLint("MissingPermission")
     private void getLocation() {
+        //在获取设备权限之前已经进行用户名和密码校验，默认界面，防止出现黑屏
+        //校验通过才进行授权获取位置信息
+//        if (ActivityCompat.checkSelfPermission(GPSActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            // 申请权限
+//            ActivityCompat.requestPermissions(GPSActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 100);
+//        }
+
         // 获取当前位置管理器
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        boolean isGpsEnable = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+      // 如果定位服务未开启，则引导用户开启跳转到设置页面
+        if (!isGpsEnable) {
+            Intent gpsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivity(gpsIntent);
+        }
         // 启动位置请求
         // LocationManager.GPS_PROVIDER GPS定位
         // LocationManager.NETWORK_PROVIDER 网络定位
@@ -171,6 +186,7 @@ public class GPSActivity extends AppCompatActivity implements LocationListener {
     // 任意定位提供者关闭执行
     @Override
     public void onProviderDisabled(@NonNull String provider) {
+        //
         Log.e("onProviderDisabled", provider);
     }
 
