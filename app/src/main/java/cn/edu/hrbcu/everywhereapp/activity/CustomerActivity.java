@@ -2,7 +2,12 @@ package cn.edu.hrbcu.everywhereapp.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +15,9 @@ import android.os.Message;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
@@ -33,7 +41,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class CustomerActivity extends AppCompatActivity {
-    private final String host = "82.156.113.196";
+    private final String host = "www.newkownledge.com";
     private ListView listView = null;
 
     OkHttpClient mClient = new OkHttpClient();
@@ -71,37 +79,40 @@ public class CustomerActivity extends AppCompatActivity {
         });
 
 
-        listView.setOnTouchListener(new View.OnTouchListener(){
-            int x,y;
+        listView.setOnTouchListener(new View.OnTouchListener() {
+            int yDown,xDown;
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()){
+                switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        x = (int)event.getRawX();
-                        y = (int)event.getRawY();
-//                        Toast.makeText(CustomerActivity.this, "OnTouch!!!", Toast.LENGTH_SHORT).show();
-//                        requestAllBus();
+                        // 当手指按下时，获取当前的Y坐标
+                         yDown = (int) event.getRawY();
+                         xDown = (int) event.getRawX();
                         break;
-
                     case MotionEvent.ACTION_UP:
-                        int nowX = (int)event.getRawX();
-                        int nowY = (int)event.getRawY();
-
-                        int movedX = nowX - x;
-                        int movedY = nowY - y;
-                        int destance = movedX * movedX + movedY * movedY;
-                        if(destance > 10000){
-                            Toast.makeText(CustomerActivity.this, "OnTouch!!!", Toast.LENGTH_SHORT).show();
+                        // 当手指离开时，获取当前的Y坐标
+                        int yUp = (int) event.getRawY();
+                        int xUp = (int) event.getRawX();
+                        // 计算手指移动的距离
+                        int dy = yUp - yDown;
+                        int dx = xUp-xDown;
+                        // 如果手指向上滑动（dy>0），则模拟下拉效果
+                        int dist=dy*dy+dx*dx;
+                        if (dist>10000) {
+                            //查询最新的线路信息数据
                             requestAllBus();
-                        }
+                            // 启动刷新动画
+//                            Animation animation = AnimationUtils.loadAnimation(CustomerActivity.this, R.animator.refresh_animation);
+//                            listView.startAnimation(animation);
 
+                            Toast.makeText(CustomerActivity.this,"onTouch" ,Toast.LENGTH_LONG).show();
+                        }
                         break;
                 }
-                return false;
+                return false; // 返回false以允许其他事件继续处理
             }
         });
-
-
+   //////////////////////////////////////////////////////////////////////////////////////////
     }
 
     private void requestAllBus(){

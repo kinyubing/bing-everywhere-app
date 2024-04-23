@@ -24,7 +24,7 @@ import okhttp3.Response;
 
 public class TestOKHTTPActivity extends AppCompatActivity {
     private OkHttpClient okHttpClient = null;
-    private final String host = "82.156.113.196";
+    private final String host = "www.newkownledge.com";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
