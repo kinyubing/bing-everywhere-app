@@ -51,7 +51,7 @@ public class GPSActivity extends AppCompatActivity implements LocationListener {
     private Double longitude2=127.45675,latitude2=45.783322;
     // 定义位置管理器
     private LocationManager locationManager;
-    private final String host = "www.newkownledge.com";
+    private final String host = "82.156.113.196";
     private String currentBus = "工大线";
     OkHttpClient okHttpClient =null;//实例化
     private final String updateGpsOK="OK";

@@ -27,7 +27,7 @@ import okhttp3.OkHttpClient;
 public class MapBusActivity extends AppCompatActivity {
     private TextView textView = null;
     private OkHttpClient okHttpClient;
-    private final String host = "www.newkownledge.com";
+    private final String host = "82.156.113.196";
     BusLocation busLocation=null;
     private Double longtitude;
     private Double latitude;

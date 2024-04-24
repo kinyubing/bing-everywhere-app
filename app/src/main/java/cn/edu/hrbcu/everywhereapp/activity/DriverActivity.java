@@ -56,7 +56,7 @@ public class DriverActivity extends AppCompatActivity {
     private boolean isGPSEnabled;
     private String locationType;
     OkHttpClient okHttpClient = null;
-    private final String host = "www.newkownledge.com";
+    private final String host = "82.156.113.196";
     private String currentBus = "工大线";
     private Button button_login = null;
     LocationManager locationManager = null;

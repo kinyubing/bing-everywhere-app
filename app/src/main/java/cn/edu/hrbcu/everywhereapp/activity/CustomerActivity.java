@@ -41,7 +41,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class CustomerActivity extends AppCompatActivity {
-    private final String host = "www.newkownledge.com";
+    private final String host = "82.156.113.196";
     private ListView listView = null;
 
     OkHttpClient mClient = new OkHttpClient();

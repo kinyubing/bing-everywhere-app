@@ -30,7 +30,7 @@ public class BusStopActivity extends AppCompatActivity {
     private TextView textView = null;
 
    // OkHttpClient mClient = new OkHttpClient();
-    private final String host = "www.newkownledge.com";
+    private final String host = "82.156.113.196";
     private String busname;
     private List<BusStop> busStops;
 
