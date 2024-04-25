@@ -60,7 +60,7 @@ public class BusStopActivity extends AppCompatActivity {
 
        // http://82.156.113.196/Router/queryRouterByBusname?busname=工大线
         Request request = new Request.Builder()
-                .url("http://"+host+"/Router/queryRouterByBusname?busname="+busname)
+                .url("http://"+host+"/Route/queryRouteByBusname?busname="+busname)
                 .build();//在显示所有的路线,例如工大线、工程线等。
         Log.i("after","afterRequest");
         new Thread(new Runnable() {
